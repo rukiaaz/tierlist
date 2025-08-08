@@ -1,446 +1,580 @@
-  <!DOCTYPE html>
-  <html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Batang Tigasin's PvP Tierlist</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap');
-      
-      body {
-        font-family: 'Oxanium', sans-serif;
-        background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 70%, #0f3460 100%);
-      }
-      
-      .glass {
-        background: rgba(15, 23, 42, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
-      }
-      
-      .player-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
-      }
-      
-      .tier-badge {
-        position: relative;
-        overflow: hidden;
-      }
-      
-      .tier-badge::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-          to bottom right,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0) 45%,
-          rgba(255, 255, 255, 0.3) 50%,
-          rgba(255, 255, 255, 0) 55%,
-          rgba(255, 255, 255, 0) 100%
-        );
-        transform: rotate(30deg);
-        animation: shine 3s infinite;
-      }
-      
-      @keyframes shine {
-        0% { transform: translateX(-100%) rotate(30deg); }
-        100% { transform: translateX(100%) rotate(30deg); }
-      }
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Batang Tigasin's PvP Tierlist</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=MedievalSharp&display=swap');
+    
+    body {
+      font-family: 'MedievalSharp', cursive;
+      background: radial-gradient(circle at center, #000000 0%, #111111 70%, #222222 100%);
+      color: #ffffff;
+    }
+    
+    .gothic-title {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+    }
+    
+    .glass {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2);
+    }
+    
+    .player-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.4);
+      border-color: rgba(255, 0, 0, 0.5);
+    }
+    
+    .tier-badge {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 0, 0, 0.5);
+    }
+    
+    .tier-badge::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 0, 0, 0) 0%,
+        rgba(255, 0, 0, 0) 45%,
+        rgba(255, 0, 0, 0.5) 50%,
+        rgba(255, 0, 0, 0) 55%,
+        rgba(255, 0, 0, 0) 100%
+      );
+      transform: rotate(30deg);
+      animation: shine 3s infinite;
+    }
+    
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
 
-      /* Modal styles */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-      }
+    .glow-red {
+      text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 
+                   0 0 10px rgba(255, 0, 0, 0.5);
+    }
 
-      .modal-content {
-        background: #0f172a;
-        padding: 2rem;
-        border-radius: 1rem;
-        width: 90%;
-        max-width: 500px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-    </style>
-  </head>
-  <body class="text-white min-h-screen px-4 py-10">
+    .glow-red-border {
+      box-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 
+                  0 0 10px rgba(255, 0, 0, 0.5);
+    }
 
-    <!-- Header -->
-    <header class="mb-10 text-center">
-      <h1 class="text-5xl font-bold tracking-tighter mb-2 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-        Batang Tigasin's PvP Tierlist
-      </h1>
-      <p class="text-gray-400 text-lg">Season 3 - 2024 Rankings</p>
-      <div class="flex justify-center mt-4 gap-4">
-        <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition flex items-center gap-2">
-          <i class="fas fa-filter"></i> Filters
-        </button>
-        <button id="addPlayerBtn" class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg transition flex items-center gap-2">
-          <i class="fas fa-plus"></i> Add Player
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #111;
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 90%;
+      max-width: 500px;
+      border: 1px solid rgba(255, 0, 0, 0.5);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+
+    /* Role edit styles */
+    .role-edit {
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #ff0000;
+    }
+    .role-edit:hover {
+      text-decoration: underline;
+      text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+    }
+    .role-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.5);
+      color: white;
+      padding: 2px 5px;
+      border-radius: 4px;
+      width: 120px;
+    }
+
+    input, select, textarea {
+      background: rgba(0, 0, 0, 0.5) !important;
+      border: 1px solid rgba(255, 0, 0, 0.3) !important;
+      color: white !important;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+    }
+
+    button {
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body class="min-h-screen px-4 py-10">
+
+  <!-- Header -->
+  <header class="mb-10 text-center">
+    <h1 class="gothic-title mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 glow-red">
+      Batang Tigasin's PvP Tierlist
+    </h1>
+    <p class="text-gray-400 text-lg">Season 3 - 2024 Rankings</p>
+    <div class="flex justify-center mt-4 gap-4">
+      <button class="px-4 py-2 bg-black hover:bg-gray-900 rounded-lg transition flex items-center gap-2 border border-red-500/30">
+        <i class="fas fa-filter"></i> Filters
+      </button>
+      <button id="addPlayerBtn" class="px-4 py-2 bg-black hover:bg-gray-900 rounded-lg transition flex items-center gap-2 border border-red-500/30 glow-red-border">
+        <i class="fas fa-plus"></i> Add Player
+      </button>
+    </div>
+  </header>
+
+  <!-- Add Player Modal -->
+  <div id="addPlayerModal" class="modal">
+    <div class="modal-content glass">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold glow-red">Add New Player</h2>
+        <button id="closeModal" class="text-gray-400 hover:text-white">
+          <i class="fas fa-times"></i>
         </button>
       </div>
-    </header>
-
-    <!-- Add Player Modal -->
-    <div id="addPlayerModal" class="modal">
-      <div class="modal-content glass">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-2xl font-bold">Add New Player</h2>
-          <button id="closeModal" class="text-gray-400 hover:text-white">
-            <i class="fas fa-times"></i>
-          </button>
+      
+      <form id="playerForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Player Name</label>
+          <input type="text" id="playerName" required
+                class="w-full rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-500">
         </div>
         
-        <form id="playerForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Player Name</label>
-            <input type="text" id="playerName" required
-                  class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium mb-1">Minecraft Username</label>
-            <input type="text" id="minecraftName" required
-                  class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium mb-1">Points</label>
-            <input type="number" id="playerPoints" required
-                  class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium mb-1">Specialization</label>
-            <select id="playerSpecialization" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500">
-              <option value="LT4 Sword">LT4 Sword</option>
-              <option value="LT4 Archery">LT4 Archery</option>
-              <option value="LT4 Magic">LT4 Magic</option>
-              <option value="LT4 Brawler">LT4 Brawler</option>
-            </select>
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium mb-1">Region</label>
-            <select id="playerRegion" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500">
-              <option value="AS">Asia (AS)</option>
-              <option value="EU">Europe (EU)</option>
-              <option value="NA">North America (NA)</option>
-            </select>
-          </div>
-          
-          <div class="pt-2">
-            <button type="submit" class="w-full py-2 bg-green-600 hover:bg-green-500 rounded-lg transition">
-              Add Player
-            </button>
-          </div>
-        </form>
+        <div>
+          <label class="block text-sm font-medium mb-1">Minecraft Username</label>
+          <input type="text" id="minecraftName" required
+                class="w-full rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-500">
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-1">Points</label>
+          <input type="number" id="playerPoints" required
+                class="w-full rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-500">
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-1">Specialization</label>
+          <select id="playerSpecialization" class="w-full rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option value="LT4 Sword">LT4 Sword</option>
+            <option value="LT4 Archery">LT4 Archery</option>
+            <option value="LT4 Magic">LT4 Magic</option>
+            <option value="LT4 Brawler">LT4 Brawler</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-1">Region</label>
+          <select id="playerRegion" class="w-full rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option value="AS">Asia (AS)</option>
+            <option value="EU">Europe (EU)</option>
+            <option value="NA">North America (NA)</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-1">Role</label>
+          <input type="text" id="playerRole" value="Tester"
+                class="w-full rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-500">
+        </div>
+        
+        <div class="pt-2">
+          <button type="submit" class="w-full py-2 bg-black hover:bg-gray-900 rounded-lg transition border border-red-500/30 glow-red-border">
+            Add Player
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Leaderboard Container -->
+  <main class="max-w-6xl mx-auto glass rounded-2xl p-6">
+    <!-- Search and Filters -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+      <div class="relative w-full md:w-64">
+        <input type="text" id="searchInput" placeholder="Search players..." 
+              class="w-full rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-red-500">
+        <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+      </div>
+      <div class="flex gap-2">
+        <select class="rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+          <option>All Regions</option>
+          <option>AS</option>
+          <option>EU</option>
+          <option>NA</option>
+        </select>
+        <select class="rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+          <option>All Tiers</option>
+          <option>LT4</option>
+          <option>LT3</option>
+          <option>LT2</option>
+        </select>
       </div>
     </div>
 
-    <!-- Leaderboard Container -->
-    <main class="max-w-6xl mx-auto glass rounded-2xl p-6">
-      <!-- Search and Filters -->
-      <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-        <div class="relative w-full md:w-64">
-          <input type="text" placeholder="Search players..." 
-                class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-green-500">
-          <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
-        </div>
-        <div class="flex gap-2">
-          <select class="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
-            <option>All Regions</option>
-            <option>AS</option>
-            <option>EU</option>
-            <option>NA</option>
-          </select>
-          <select class="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
-            <option>All Tiers</option>
-            <option>LT4</option>
-            <option>LT3</option>
-            <option>LT2</option>
-          </select>
-        </div>
-      </div>
+    <!-- Leaderboard Table Header -->
+    <div class="grid grid-cols-12 gap-4 px-4 py-3 text-gray-400 text-sm font-medium border-b border-gray-800 mb-2 hidden md:grid">
+      <div class="col-span-1">Rank</div>
+      <div class="col-span-4">Player</div>
+      <div class="col-span-1 text-center">Region</div>
+      <div class="col-span-3">Specialization</div>
+      <div class="col-span-2 text-center">Role</div>
+      <div class="col-span-1 text-right">Points</div>
+    </div>
 
-      <!-- Leaderboard Table Header -->
-      <div class="grid grid-cols-12 gap-4 px-4 py-3 text-gray-400 text-sm font-medium border-b border-gray-800 mb-2 hidden md:grid">
-        <div class="col-span-1">Rank</div>
-        <div class="col-span-4">Player</div>
-        <div class="col-span-1 text-center">Region</div>
-        <div class="col-span-3">Specialization</div>
-        <div class="col-span-2 text-center">Role</div>
-        <div class="col-span-1 text-right">Points</div>
-      </div>
+    <!-- Player Cards Container -->
+    <div id="playersContainer" class="space-y-3">
+      <!-- Player cards will be dynamically inserted here -->
+    </div>
 
-      <!-- Player Cards Container -->
-      <div id="playersContainer" class="space-y-3">
-        <!-- Player cards will be dynamically inserted here -->
-      </div>
+    <!-- Pagination -->
+    <div class="flex justify-center mt-8">
+      <nav class="flex items-center gap-1">
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-black hover:bg-gray-900 border border-red-500/30">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-black text-white font-medium border border-red-500/30 glow-red-border">1</button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-black hover:bg-gray-900 border border-red-500/30">2</button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-black hover:bg-gray-900 border border-red-500/30">3</button>
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-black hover:bg-gray-900 border border-red-500/30">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </nav>
+    </div>
+  </main>
 
-      <!-- Pagination -->
-      <div class="flex justify-center mt-8">
-        <nav class="flex items-center gap-1">
-          <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-green-600 text-white font-medium">1</button>
-          <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700">2</button>
-          <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700">3</button>
-          <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </nav>
-      </div>
-    </main>
+  <!-- Footer -->
+  <footer class="text-center mt-12 text-sm text-gray-500">
+    <p>© 2024 Batang Tigasin Gaming. All rights reserved.</p>
+    <div class="flex justify-center gap-4 mt-4">
+      <a href="#" class="hover:text-red-400 transition"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="hover:text-red-400 transition"><i class="fab fa-discord"></i></a>
+      <a href="#" class="hover:text-red-400 transition"><i class="fab fa-youtube"></i></a>
+    </div>
+  </footer>
 
-    <!-- Footer -->
-    <footer class="text-center mt-12 text-sm text-gray-500">
-      <p>© 2024 Batang Tigasin Gaming. All rights reserved.</p>
-      <div class="flex justify-center gap-4 mt-4">
-        <a href="#" class="hover:text-green-400 transition"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="hover:text-green-400 transition"><i class="fab fa-discord"></i></a>
-        <a href="#" class="hover:text-green-400 transition"><i class="fab fa-youtube"></i></a>
-      </div>
-    </footer>
+  <script>
+    // Database simulation
+    let playersDatabase = [
+      {
+        id: 1,
+        name: "Zhwae",
+        minecraftName: "Zhwae",
+        points: 405,
+        specialization: "LT4 ",
+        region: "AS",
+        role: "Overseer - Pinuno"
+      },
+      {
+        id: 2,
+        name: "Negmaa",
+        minecraftName: "Negmaa",
+        points: 330,
+        specialization: "HT4",
+        region: "AS",
+        role: "Tester"
+      },
+      {
+        id: 3,
+        name: "KobPxR",
+        minecraftName: "KobPxR",
+        points: 260,
+        specialization: "LT3",
+        region: "AS",
+        role: "Tester"
+      },
+      {
+        id: 4,
+        name: "gogogacaca",
+        minecraftName: "gogogacaca",
+        points: 226,
+        specialization: "LT4",
+        region: "AS",
+        role: "Tester"
+      },
+       {
+        id: 5,
+        name: "Wedzkii",
+        minecraftName: "Wedzkii",
+        points: 405,
+        specialization: "LT4",
+        region: "AS",
+        role: "Tester"
+      },
+       {
+        id: 6,
+        name: "Cushh",
+        minecraftName: "Cushh",
+        points: 405,
+        specialization: "LT3",
+        region: "AS",
+        role: "Tester"
+      },
+       {
+        id: 7,
+        name: "",
+        minecraftName: "Wedzkii",
+        points: 405,
+        specialization: "LT4",
+        region: "AS",
+        role: "Tester"
+      },
+       {
+        id: 8,
+        name: "Wedzkii",
+        minecraftName: "Wedzkii",
+        points: 405,
+        specialization: "LT4",
+        region: "AS",
+        role: "Tester"
+      },
+      
+    ];
 
-    <script>
-      // Database simulation
-      let playersDatabase = [
-        {
-          id: 1,
-          name: "Zhwae",
-          minecraftName: "Zhwae",
-          points: 405,
-          specialization: "LT4 ",
-          region: "AS",
-          role: "Overseer - Pinuno"
-        },
-        {
-          id: 2,
-          name: "Negmaa",
-          minecraftName: "Negmaa",
-          points: 330,
-          specialization: "HT4",
-          region: "AS",
-          role: "Tester"
-        },
-        {
-          id: 3,
-          name: "KobPxR",
-          minecraftName: "KobPxR",
-          points: 260,
-          specialization: "LT3",
-          region: "AS",
-          role: "Tester"
-        },
-        {
-          id: 4,
-          name: "gogogacaca",
-          minecraftName: "gogogacaca",
-          points: 226,
-          specialization: "LT4",
-          region: "AS",
-          role: "Tester"
-        },
-         {
-          id: 5,
-          name: "Wedzkii",
-          minecraftName: "Wedzkii",
-          points: 405,
-          specialization: "LT4",
-          region: "AS",
-          role: "Tester"
-        },
-         {
-          id: 6,
-          name: "Cushh",
-          minecraftName: "Cushh",
-          points: 405,
-          specialization: "LT3",
-          region: "AS",
-          role: "Tester"
-        },
-         {
-          id: 7,
-          name: "",
-          minecraftName: "Wedzkii",
-          points: 405,
-          specialization: "LT4",
-          region: "AS",
-          role: "Tester"
-        },
-         {
-          id: 8,
-          name: "Wedzkii",
-          minecraftName: "Wedzkii",
-          points: 405,
-          specialization: "LT4",
-          region: "AS",
-          role: "Tester"
-        },
-        
-      ];
+    // DOM elements
+    const addPlayerBtn = document.getElementById('addPlayerBtn');
+    const addPlayerModal = document.getElementById('addPlayerModal');
+    const closeModal = document.getElementById('closeModal');
+    const playerForm = document.getElementById('playerForm');
+    const playersContainer = document.getElementById('playersContainer');
+    const searchInput = document.getElementById('searchInput');
 
-      // DOM elements
-      const addPlayerBtn = document.getElementById('addPlayerBtn');
-      const addPlayerModal = document.getElementById('addPlayerModal');
-      const closeModal = document.getElementById('closeModal');
-      const playerForm = document.getElementById('playerForm');
-      const playersContainer = document.getElementById('playersContainer');
+    // Modal control
+    addPlayerBtn.addEventListener('click', () => {
+      addPlayerModal.style.display = 'flex';
+    });
 
-      // Modal control
-      addPlayerBtn.addEventListener('click', () => {
-        addPlayerModal.style.display = 'flex';
-      });
+    closeModal.addEventListener('click', () => {
+      addPlayerModal.style.display = 'none';
+    });
 
-      closeModal.addEventListener('click', () => {
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === addPlayerModal) {
         addPlayerModal.style.display = 'none';
-      });
-
-      // Close modal when clicking outside
-      window.addEventListener('click', (e) => {
-        if (e.target === addPlayerModal) {
-          addPlayerModal.style.display = 'none';
-        }
-      });
-
-      // Form submission
-      playerForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const newPlayer = {
-          id: Date.now(), // Simple unique ID
-          name: document.getElementById('playerName').value,
-          minecraftName: document.getElementById('minecraftName').value,
-          points: parseInt(document.getElementById('playerPoints').value),
-          specialization: document.getElementById('playerSpecialization').value,
-          region: document.getElementById('playerRegion').value,
-          role: "Overseer - Pinuno"
-        };
-        
-        // Add to database
-        playersDatabase.push(newPlayer);
-        
-        // Re-render players (sorted by points)
-        playersDatabase.sort((a, b) => b.points - a.points);
-        renderPlayers();
-        
-        // Reset and close form
-        playerForm.reset();
-        addPlayerModal.style.display = 'none';
-      });
-
-      // Render all players
-      function renderPlayers() {
-        playersContainer.innerHTML = '';
-        
-        playersDatabase.forEach((player, index) => {
-          const rankColors = [
-            'from-yellow-500 to-yellow-300', // 1st place
-            'from-gray-400 to-gray-200',     // 2nd place
-            'from-amber-600 to-amber-400',   // 3rd place
-            'from-gray-600 to-gray-400'      // 4th+ place
-          ];
-          
-          const rankColor = rankColors[Math.min(index, rankColors.length - 1)];
-          
-          const playerCard = document.createElement('div');
-          playerCard.className = 'player-card glass rounded-xl p-4 transition-all duration-300 hover:bg-gray-800/50 border border-gray-800 hover:border-green-500/30';
-          playerCard.innerHTML = `
-            <div class="grid grid-cols-12 gap-4 items-center">
-              <!-- Rank -->
-              <div class="col-span-1 flex items-center">
-                <span class="w-8 h-8 flex items-center justify-center bg-gradient-to-br ${rankColor} rounded-full text-gray-900 font-bold">${index + 1}</span>
-              </div>
-              
-              <!-- Player Info -->
-              <div class="col-span-4 flex items-center space-x-3">
-                <img src="https://minotar.net/helm/${player.minecraftName}/100" alt="${player.name}" class="w-12 h-12 rounded-full border-2 border-green-500 shadow-lg" />
-                <div>
-                  <h2 class="font-bold text-lg">${player.name}</h2>
-                  <div class="flex items-center gap-2 mt-1">
-                    <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">BTG</span>
-                    <span class="text-xs text-gray-400">${player.role}</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Region -->
-              <div class="col-span-1 text-center hidden md:block">
-                <span class="bg-green-600/80 text-xs px-3 py-1 rounded-full">${player.region}</span>
-              </div>
-              
-              <!-- Specialization -->
-              <div class="col-span-3">
-                <div class="flex flex-wrap gap-2">
-                  <div class="tier-badge flex items-center space-x-1 bg-gray-800 border border-green-500 px-3 py-1 rounded-full text-sm font-medium text-green-300">
-                    <i class="fas fa-${getSpecializationIcon(player.specialization)} text-green-400"></i>
-                    <span>${player.specialization}</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Role -->
-              <div class="col-span-2 text-center hidden md:block">
-                <span class="font-bold text-green-400">Overseer</span>
-              </div>
-              
-              <!-- Points -->
-              <div class="col-span-1 text-right hidden md:block">
-                <span class="font-bold">${player.points}</span>
-              </div>
-            </div>
-            
-            <!-- Mobile Stats -->
-            <div class="grid grid-cols-3 gap-2 mt-3 md:hidden text-center text-sm">
-              <div class="bg-gray-800/50 rounded p-2">
-                <div class="text-gray-400">Region</div>
-                <div class="font-medium">${player.region}</div>
-              </div>
-              <div class="bg-gray-800/50 rounded p-2">
-                <div class="text-gray-400">Role</div>
-                <div class="font-medium text-green-400">Overseer</div>
-              </div>
-              <div class="bg-gray-800/50 rounded p-2">
-                <div class="text-gray-400">Points</div>
-                <div class="font-medium">${player.points}</div>
-              </div>
-            </div>
-          `;
-          
-          playersContainer.appendChild(playerCard);
-        });
       }
+    });
 
-      // Helper function to get icon based on specialization
-      function getSpecializationIcon(specialization) {
-        if (specialization.includes('Sword')) return 'sword';
-        if (specialization.includes('Archery')) return 'bow-arrow';
-        if (specialization.includes('Magic')) return 'magic';
-        if (specialization.includes('Brawler')) return 'fist-raised';
-        return 'sword';
-      }
-
-      // Initial render
+    // Form submission
+    playerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const newPlayer = {
+        id: Date.now(), // Simple unique ID
+        name: document.getElementById('playerName').value,
+        minecraftName: document.getElementById('minecraftName').value,
+        points: parseInt(document.getElementById('playerPoints').value),
+        specialization: document.getElementById('playerSpecialization').value,
+        region: document.getElementById('playerRegion').value,
+        role: document.getElementById('playerRole').value || "Tester"
+      };
+      
+      // Add to database
+      playersDatabase.push(newPlayer);
+      
+      // Re-render players (sorted by points)
+      playersDatabase.sort((a, b) => b.points - a.points);
       renderPlayers();
-    </script>
-  </body>
-  </html>
+      
+      // Reset and close form
+      playerForm.reset();
+      addPlayerModal.style.display = 'none';
+    });
+
+    // Search functionality
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      if (searchTerm === '') {
+        renderPlayers();
+        return;
+      }
+      
+      const filteredPlayers = playersDatabase.filter(player => 
+        player.name.toLowerCase().includes(searchTerm) || 
+        player.minecraftName.toLowerCase().includes(searchTerm) ||
+        player.role.toLowerCase().includes(searchTerm) ||
+        player.specialization.toLowerCase().includes(searchTerm));
+      
+      renderFilteredPlayers(filteredPlayers);
+    });
+
+    // Render filtered players
+    function renderFilteredPlayers(filteredPlayers) {
+      playersContainer.innerHTML = '';
+      
+      filteredPlayers.forEach((player, index) => {
+        playersContainer.appendChild(createPlayerCard(player, index));
+      });
+    }
+
+    // Render all players
+    function renderPlayers() {
+      playersContainer.innerHTML = '';
+      
+      playersDatabase.forEach((player, index) => {
+        playersContainer.appendChild(createPlayerCard(player, index));
+      });
+    }
+
+    // Create player card element
+    function createPlayerCard(player, index) {
+      const rankColors = [
+        'from-white to-gray-300', // 1st place
+        'from-gray-400 to-gray-200',     // 2nd place
+        'from-gray-500 to-gray-300',   // 3rd place
+        'from-gray-600 to-gray-400'      // 4th+ place
+      ];
+      
+      const rankColor = rankColors[Math.min(index, rankColors.length - 1)];
+      
+      const playerCard = document.createElement('div');
+      playerCard.className = 'player-card glass rounded-xl p-4 transition-all duration-300 hover:bg-gray-800/50 border border-gray-800 hover:border-red-500/30';
+      playerCard.dataset.id = player.id;
+      
+      // Create role display/edit elements
+      const roleDisplay = document.createElement('span');
+      roleDisplay.className = 'role-edit font-bold';
+      roleDisplay.textContent = player.role;
+      roleDisplay.addEventListener('click', () => {
+        const roleInput = document.createElement('input');
+        roleInput.type = 'text';
+        roleInput.className = 'role-input';
+        roleInput.value = player.role;
+        
+        roleInput.addEventListener('blur', () => {
+          const newRole = roleInput.value.trim();
+          if (newRole) {
+            // Update in database
+            const playerIndex = playersDatabase.findIndex(p => p.id === player.id);
+            if (playerIndex !== -1) {
+              playersDatabase[playerIndex].role = newRole;
+            }
+            roleDisplay.textContent = newRole;
+            roleDisplay.parentNode.replaceChild(roleDisplay, roleInput);
+          }
+        });
+        
+        roleInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            roleInput.blur();
+          }
+        });
+        
+        roleDisplay.parentNode.replaceChild(roleInput, roleDisplay);
+        roleInput.focus();
+      });
+      
+      playerCard.innerHTML = `
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <!-- Rank -->
+          <div class="col-span-1 flex items-center">
+            <span class="w-8 h-8 flex items-center justify-center bg-gradient-to-br ${rankColor} rounded-full text-black font-bold">${index + 1}</span>
+          </div>
+          
+          <!-- Player Info -->
+          <div class="col-span-4 flex items-center space-x-3">
+            <img src="https://minotar.net/helm/${player.minecraftName}/100" alt="${player.name}" class="w-12 h-12 rounded-full border-2 border-red-500 shadow-lg" />
+            <div>
+              <h2 class="font-bold text-lg">${player.name}</h2>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-xs bg-black px-2 py-0.5 rounded border border-red-500/30">BTG</span>
+                <span class="text-xs text-gray-400">${player.role}</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Region -->
+          <div class="col-span-1 text-center hidden md:block">
+            <span class="bg-black text-xs px-3 py-1 rounded-full border border-red-500/30">${player.region}</span>
+          </div>
+          
+          <!-- Specialization -->
+          <div class="col-span-3">
+            <div class="flex flex-wrap gap-2">
+              <div class="tier-badge flex items-center space-x-1 bg-black px-3 py-1 rounded-full text-sm font-medium">
+                <i class="fas fa-${getSpecializationIcon(player.specialization)} text-red-500"></i>
+                <span>${player.specialization}</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Role -->
+          <div class="col-span-2 text-center hidden md:block">
+          </div>
+          
+          <!-- Points -->
+          <div class="col-span-1 text-right hidden md:block">
+            <span class="font-bold">${player.points}</span>
+          </div>
+        </div>
+        
+        <!-- Mobile Stats -->
+        <div class="grid grid-cols-3 gap-2 mt-3 md:hidden text-center text-sm">
+          <div class="bg-black/50 rounded p-2 border border-red-500/30">
+            <div class="text-gray-400">Region</div>
+            <div class="font-medium">${player.region}</div>
+          </div>
+          <div class="bg-black/50 rounded p-2 border border-red-500/30">
+            <div class="text-gray-400">Role</div>
+            <div class="font-medium text-red-500">${player.role}</div>
+          </div>
+          <div class="bg-black/50 rounded p-2 border border-red-500/30">
+            <div class="text-gray-400">Points</div>
+            <div class="font-medium">${player.points}</div>
+          </div>
+        </div>
+      `;
+      
+      // Add the role display element to the card
+      const roleContainer = playerCard.querySelector('.col-span-2.text-center');
+      roleContainer.appendChild(roleDisplay);
+      
+      return playerCard;
+    }
+
+    // Helper function to get icon based on specialization
+    function getSpecializationIcon(specialization) {
+      if (specialization.includes('Sword')) return 'sword';
+      if (specialization.includes('Archery')) return 'bow-arrow';
+      if (specialization.includes('Magic')) return 'magic';
+      if (specialization.includes('Brawler')) return 'fist-raised';
+      return 'sword';
+    }
+
+    // Initial render
+    renderPlayers();
+  </script>
+</body>
+</html>
